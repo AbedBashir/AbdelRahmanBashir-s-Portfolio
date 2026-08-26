@@ -49,9 +49,35 @@ export default function About() {
               {about.paragraphs.map((p, i) => (
                 <p key={i}>{p}</p>
               ))}
-              <p className="text-sm uppercase tracking-[0.2em] text-cyan-400">
-                {profile.location}
-              </p>
+
+              <div className="flex flex-wrap gap-2 pt-2">
+                {about.traits.map((trait) => (
+                  <span
+                    key={trait}
+                    className="rounded-full bg-white/5 px-4 py-1.5 text-sm text-gray-200"
+                  >
+                    {trait}
+                  </span>
+                ))}
+              </div>
+
+              <div className="flex flex-wrap items-center gap-x-6 gap-y-2 pt-2 text-sm">
+                <span className="uppercase tracking-[0.2em] text-cyan-400">
+                  {profile.location}
+                </span>
+                <span className="text-gray-500">·</span>
+                <span className="text-gray-400">
+                  {about.languages.map((l) => `${l.name} (${l.level})`).join(" · ")}
+                </span>
+              </div>
+
+              <a
+                href={profile.cvUrl}
+                download
+                className="mt-2 inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-cyan-400 to-fuchsia-500 px-6 py-3 font-semibold text-black transition-transform hover:scale-105"
+              >
+                Download CV
+              </a>
             </div>
           </Reveal>
 

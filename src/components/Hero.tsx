@@ -85,7 +85,7 @@ export default function Hero() {
 
           <div className="mt-10 flex flex-wrap items-center gap-4">
             <a
-              href="#work"
+              href="#websites"
               className="hero-cta rounded-full bg-gradient-to-r from-cyan-400 to-fuchsia-500 px-7 py-3.5 font-semibold text-black transition-transform hover:scale-105"
             >
               View My Work

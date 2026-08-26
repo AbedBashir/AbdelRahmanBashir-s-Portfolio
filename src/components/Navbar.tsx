@@ -5,10 +5,10 @@ import { profile } from "@/data/content";
 
 const links = [
   { href: "#about", label: "About" },
-  { href: "#studies", label: "Studies" },
+  { href: "#services", label: "Services" },
   { href: "#skills", label: "Skills" },
-  { href: "#work", label: "Work" },
-  { href: "#apps", label: "Apps" },
+  { href: "#experience", label: "Experience" },
+  { href: "#websites", label: "Websites" },
   { href: "#stores", label: "Stores" },
   { href: "#contact", label: "Contact" },
 ];

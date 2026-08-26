@@ -2,21 +2,20 @@
 
 import { websites } from "@/data/content";
 import SectionHeading from "./SectionHeading";
-import Reveal from "./Reveal";
-import WorkCard from "./WorkCard";
+import WorkGrid from "./WorkGrid";
 
 export default function Work() {
   return (
-    <section id="work" className="relative py-28">
+    <section id="websites" className="relative py-28">
       <div className="mx-auto max-w-6xl px-6">
-        <SectionHeading eyebrow="Selected Projects" title="Websites & Platforms" />
+        <SectionHeading eyebrow="Selected Work" title="Websites & Platforms" />
+        <p className="mt-6 max-w-2xl text-lg text-gray-300">
+          A selection of the {websites.length}+ WordPress and custom websites
+          I&apos;ve designed and built for clients across Canada, Lebanon, and beyond.
+        </p>
 
-        <div className="mt-16 grid grid-cols-1 gap-8 md:grid-cols-3">
-          {websites.map((item, i) => (
-            <Reveal key={item.title} direction="up" delay={i * 0.1}>
-              <WorkCard item={item} />
-            </Reveal>
-          ))}
+        <div className="mt-16">
+          <WorkGrid items={websites} />
         </div>
       </div>
     </section>

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { FiBriefcase, FiBookOpen } from "react-icons/fi";
 import { gsap, useGsapSetup } from "@/lib/gsap";
 import { studies } from "@/data/content";
 import SectionHeading from "./SectionHeading";
@@ -57,9 +58,9 @@ export default function Timeline() {
   }, []);
 
   return (
-    <section id="studies" className="relative py-28">
+    <section id="experience" className="relative py-28">
       <div className="mx-auto max-w-6xl px-6">
-        <SectionHeading eyebrow="Education & Growth" title="My Studies" />
+        <SectionHeading eyebrow="My Journey" title="Experience & Education" />
 
         <div ref={listRef} className="relative mt-20">
           <div className="absolute left-4 top-0 h-full w-px bg-white/10 md:left-1/2 md:-translate-x-1/2">
@@ -87,9 +88,22 @@ export default function Timeline() {
                     }`}
                   />
                   <div className="glass rounded-2xl p-6">
-                    <span className="font-mono text-xs uppercase tracking-widest text-cyan-400">
-                      {item.year}
-                    </span>
+                    <div
+                      className={`flex items-center gap-2 ${
+                        fromLeft ? "md:flex-row-reverse" : ""
+                      }`}
+                    >
+                      <span className="flex h-6 w-6 items-center justify-center rounded-full bg-white/10 text-cyan-400">
+                        {item.type === "work" ? (
+                          <FiBriefcase size={12} />
+                        ) : (
+                          <FiBookOpen size={12} />
+                        )}
+                      </span>
+                      <span className="font-mono text-xs uppercase tracking-widest text-cyan-400">
+                        {item.year}
+                      </span>
+                    </div>
                     <h3 className="font-heading mt-2 text-xl font-bold text-white">
                       {item.title}
                     </h3>

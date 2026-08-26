@@ -1,10 +1,10 @@
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import About from "@/components/About";
-import Timeline from "@/components/Timeline";
+import Services from "@/components/Services";
 import Skills from "@/components/Skills";
+import Timeline from "@/components/Timeline";
 import Work from "@/components/Work";
-import Apps from "@/components/Apps";
 import Stores from "@/components/Stores";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
@@ -16,10 +16,10 @@ export default function Home() {
       <main>
         <Hero />
         <About />
-        <Timeline />
+        <Services />
         <Skills />
+        <Timeline />
         <Work />
-        <Apps />
         <Stores />
         <Contact />
       </main>

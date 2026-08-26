@@ -1,7 +1,7 @@
 "use client";
 
 import { useForm, ValidationError } from "@formspree/react";
-import { FiGithub, FiLinkedin, FiTwitter, FiInstagram, FiMail } from "react-icons/fi";
+import { FiGithub, FiLinkedin, FiMail, FiPhone, FiMapPin } from "react-icons/fi";
 import { contact, profile } from "@/data/content";
 import SectionHeading from "./SectionHeading";
 import Reveal from "./Reveal";
@@ -33,12 +33,37 @@ export default function Contact() {
                 </div>
               </a>
 
+              <a
+                href={`tel:${profile.phone.replace(/\s/g, "")}`}
+                className="glass flex items-center gap-4 rounded-2xl p-5 transition-transform hover:-translate-y-1"
+              >
+                <span className="flex h-11 w-11 items-center justify-center rounded-full bg-gradient-to-br from-cyan-400 to-fuchsia-500 text-black">
+                  <FiPhone size={20} />
+                </span>
+                <div>
+                  <p className="text-xs uppercase tracking-widest text-gray-400">
+                    Phone
+                  </p>
+                  <p className="font-medium text-white">{profile.phone}</p>
+                </div>
+              </a>
+
+              <div className="glass flex items-center gap-4 rounded-2xl p-5">
+                <span className="flex h-11 w-11 items-center justify-center rounded-full bg-gradient-to-br from-cyan-400 to-fuchsia-500 text-black">
+                  <FiMapPin size={20} />
+                </span>
+                <div>
+                  <p className="text-xs uppercase tracking-widest text-gray-400">
+                    Location
+                  </p>
+                  <p className="font-medium text-white">{profile.location}</p>
+                </div>
+              </div>
+
               <div className="flex gap-4">
                 {[
                   { icon: FiGithub, href: profile.socials.github, label: "GitHub" },
                   { icon: FiLinkedin, href: profile.socials.linkedin, label: "LinkedIn" },
-                  { icon: FiTwitter, href: profile.socials.twitter, label: "Twitter" },
-                  { icon: FiInstagram, href: profile.socials.instagram, label: "Instagram" },
                 ].map(({ icon: Icon, href, label }) => (
                   <a
                     key={label}
