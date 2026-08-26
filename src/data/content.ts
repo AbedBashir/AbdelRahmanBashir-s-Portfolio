@@ -217,5 +217,5 @@ export const contact = {
     "Have a project in mind, need a Shopify app built, or want to manage your store better? Let's talk.",
   // Formspree endpoint — create a free form at https://formspree.io and paste
   // your form ID below (looks like "https://formspree.io/f/xxxxabcd").
-  formspreeEndpoint: "https://formspree.io/f/YOUR_FORM_ID",
+  formspreeEndpoint: "https://formspree.io/f/xgawgjgk",
 };
