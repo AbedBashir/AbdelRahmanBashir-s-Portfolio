@@ -12,7 +12,7 @@ export const profile = {
   tagline:
     "I design and build fast, animated web experiences — from custom Shopify apps to full-stack platforms.",
   location: "Remote / Available Worldwide",
-  email: "hello@abedbashir.com",
+  email: "dev@abedbashir.com",
   cvUrl: "/cv/AbdelRahman-Bashir-CV.pdf", // TODO: drop your real CV PDF in public/cv/
   photo: "/images/profile.svg", // TODO: replace with your real photo
   socials: {
