@@ -1,0 +1,163 @@
+"use client";
+
+import { useState, type FormEvent } from "react";
+import { FiGithub, FiLinkedin, FiTwitter, FiInstagram, FiMail } from "react-icons/fi";
+import { contact, profile } from "@/data/content";
+import SectionHeading from "./SectionHeading";
+import Reveal from "./Reveal";
+
+type Status = "idle" | "sending" | "success" | "error";
+
+export default function Contact() {
+  const [status, setStatus] = useState<Status>("idle");
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const form = e.currentTarget;
+    const data = new FormData(form);
+
+    setStatus("sending");
+    try {
+      const res = await fetch(contact.formspreeEndpoint, {
+        method: "POST",
+        body: data,
+        headers: { Accept: "application/json" },
+      });
+      if (res.ok) {
+        setStatus("success");
+        form.reset();
+      } else {
+        setStatus("error");
+      }
+    } catch {
+      setStatus("error");
+    }
+  };
+
+  return (
+    <section id="contact" className="relative py-28">
+      <div className="mx-auto max-w-6xl px-6">
+        <SectionHeading eyebrow="Get In Touch" title={contact.heading} />
+        <p className="mt-6 max-w-2xl text-lg text-gray-300">{contact.subheading}</p>
+
+        <div className="mt-14 grid grid-cols-1 gap-12 md:grid-cols-[1fr_1.2fr]">
+          <Reveal direction="left">
+            <div className="space-y-6">
+              <a
+                href={`mailto:${profile.email}`}
+                className="glass flex items-center gap-4 rounded-2xl p-5 transition-transform hover:-translate-y-1"
+              >
+                <span className="flex h-11 w-11 items-center justify-center rounded-full bg-gradient-to-br from-cyan-400 to-fuchsia-500 text-black">
+                  <FiMail size={20} />
+                </span>
+                <div>
+                  <p className="text-xs uppercase tracking-widest text-gray-400">
+                    Email
+                  </p>
+                  <p className="font-medium text-white">{profile.email}</p>
+                </div>
+              </a>
+
+              <div className="flex gap-4">
+                {[
+                  { icon: FiGithub, href: profile.socials.github, label: "GitHub" },
+                  { icon: FiLinkedin, href: profile.socials.linkedin, label: "LinkedIn" },
+                  { icon: FiTwitter, href: profile.socials.twitter, label: "Twitter" },
+                  { icon: FiInstagram, href: profile.socials.instagram, label: "Instagram" },
+                ].map(({ icon: Icon, href, label }) => (
+                  <a
+                    key={label}
+                    href={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={label}
+                    className="glass flex h-12 w-12 items-center justify-center rounded-full text-white transition-transform hover:-translate-y-1 hover:text-cyan-300"
+                  >
+                    <Icon size={20} />
+                  </a>
+                ))}
+              </div>
+            </div>
+          </Reveal>
+
+          <Reveal direction="right">
+            <form onSubmit={handleSubmit} className="glass space-y-5 rounded-3xl p-8">
+              <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+                <div>
+                  <label className="mb-2 block text-sm text-gray-300" htmlFor="name">
+                    Name
+                  </label>
+                  <input
+                    id="name"
+                    name="name"
+                    required
+                    className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white outline-none transition-colors focus:border-cyan-400"
+                    placeholder="Your name"
+                  />
+                </div>
+                <div>
+                  <label className="mb-2 block text-sm text-gray-300" htmlFor="email">
+                    Email
+                  </label>
+                  <input
+                    id="email"
+                    type="email"
+                    name="email"
+                    required
+                    className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white outline-none transition-colors focus:border-cyan-400"
+                    placeholder="you@example.com"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="mb-2 block text-sm text-gray-300" htmlFor="subject">
+                  Subject
+                </label>
+                <input
+                  id="subject"
+                  name="subject"
+                  className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white outline-none transition-colors focus:border-cyan-400"
+                  placeholder="What's this about?"
+                />
+              </div>
+
+              <div>
+                <label className="mb-2 block text-sm text-gray-300" htmlFor="message">
+                  Message
+                </label>
+                <textarea
+                  id="message"
+                  name="message"
+                  required
+                  rows={5}
+                  className="w-full resize-none rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white outline-none transition-colors focus:border-cyan-400"
+                  placeholder="Tell me about your project..."
+                />
+              </div>
+
+              <button
+                type="submit"
+                disabled={status === "sending"}
+                className="w-full rounded-xl bg-gradient-to-r from-cyan-400 to-fuchsia-500 px-6 py-4 font-semibold text-black transition-transform hover:scale-[1.02] disabled:opacity-60"
+              >
+                {status === "sending" ? "Sending..." : "Send Message"}
+              </button>
+
+              {status === "success" && (
+                <p className="text-center text-sm text-emerald-400">
+                  Thanks! Your message has been sent — I&apos;ll reply soon.
+                </p>
+              )}
+              {status === "error" && (
+                <p className="text-center text-sm text-red-400">
+                  Something went wrong. Please email me directly at {profile.email}.
+                </p>
+              )}
+            </form>
+          </Reveal>
+        </div>
+      </div>
+    </section>
+  );
+}

@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500">
+  <defs>
+    <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#22d3ee"/>
+      <stop offset="100%" stop-color="#f472b6"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="500" fill="#0b0e14"/>
+  <rect width="800" height="500" fill="url(#g)" opacity="0.22"/>
+  <text x="50%" y="52%" text-anchor="middle" font-family="Arial, sans-serif" font-size="42" font-weight="700" fill="#e5e7eb">Store Two</text>
+</svg>
