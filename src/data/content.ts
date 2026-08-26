@@ -215,7 +215,7 @@ export const contact = {
   heading: "Let's Build Something Great",
   subheading:
     "Have a project in mind, need a Shopify app built, or want to manage your store better? Let's talk.",
-  // Formspree endpoint — create a free form at https://formspree.io and paste
-  // your form ID below (looks like "https://formspree.io/f/xxxxabcd").
-  formspreeEndpoint: "https://formspree.io/f/xgawgjgk",
+  // Formspree form ID — create a free form at https://formspree.io.
+  // Used via the official @formspree/react `useForm` hook in Contact.tsx.
+  formspreeId: "xgawgjgk",
 };
