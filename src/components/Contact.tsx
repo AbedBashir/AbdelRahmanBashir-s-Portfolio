@@ -20,7 +20,7 @@ export default function Contact() {
             <div className="space-y-6">
               <a
                 href={`mailto:${profile.email}`}
-                className="glass flex items-center gap-4 rounded-2xl p-5 transition-transform hover:-translate-y-1"
+                className="panel flex items-center gap-4 rounded-2xl p-5 transition-transform hover:-translate-y-1"
               >
                 <span className="flex h-11 w-11 items-center justify-center rounded-full bg-gradient-to-br from-cyan-400 to-fuchsia-500 text-black">
                   <FiMail size={20} />
@@ -35,7 +35,7 @@ export default function Contact() {
 
               <a
                 href={`tel:${profile.phone.replace(/\s/g, "")}`}
-                className="glass flex items-center gap-4 rounded-2xl p-5 transition-transform hover:-translate-y-1"
+                className="panel flex items-center gap-4 rounded-2xl p-5 transition-transform hover:-translate-y-1"
               >
                 <span className="flex h-11 w-11 items-center justify-center rounded-full bg-gradient-to-br from-cyan-400 to-fuchsia-500 text-black">
                   <FiPhone size={20} />
@@ -48,7 +48,7 @@ export default function Contact() {
                 </div>
               </a>
 
-              <div className="glass flex items-center gap-4 rounded-2xl p-5">
+              <div className="panel flex items-center gap-4 rounded-2xl p-5">
                 <span className="flex h-11 w-11 items-center justify-center rounded-full bg-gradient-to-br from-cyan-400 to-fuchsia-500 text-black">
                   <FiMapPin size={20} />
                 </span>
@@ -71,7 +71,7 @@ export default function Contact() {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={label}
-                    className="glass flex h-12 w-12 items-center justify-center rounded-full text-white transition-transform hover:-translate-y-1 hover:text-cyan-300"
+                    className="panel flex h-12 w-12 items-center justify-center rounded-full text-white transition-transform hover:-translate-y-1 hover:text-cyan-300"
                   >
                     <Icon size={20} />
                   </a>
@@ -82,7 +82,7 @@ export default function Contact() {
 
           <Reveal direction="right">
             {state.succeeded ? (
-              <div className="glass flex h-full flex-col items-center justify-center rounded-3xl p-8 text-center">
+              <div className="panel flex h-full flex-col items-center justify-center rounded-3xl p-8 text-center">
                 <span className="flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-cyan-400 to-fuchsia-500 text-2xl text-black">
                   ✓
                 </span>
@@ -94,13 +94,13 @@ export default function Contact() {
                 </p>
                 <button
                   onClick={resetForm}
-                  className="mt-6 rounded-full glass px-6 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-white/10"
+                  className="mt-6 rounded-full panel px-6 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-white/10"
                 >
                   Send another message
                 </button>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} className="glass space-y-5 rounded-3xl p-8">
+              <form onSubmit={handleSubmit} className="panel space-y-5 rounded-3xl p-8">
                 <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
                   <div>
                     <label className="mb-2 block text-sm text-gray-300" htmlFor="name">

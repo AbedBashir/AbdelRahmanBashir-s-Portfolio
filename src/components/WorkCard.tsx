@@ -10,7 +10,7 @@ export default function WorkCard({ item }: { item: WorkItem }) {
       href={item.link}
       target="_blank"
       rel="noopener noreferrer"
-      className="group glass relative block overflow-hidden rounded-3xl transition-transform duration-300 hover:-translate-y-2"
+      className="group panel relative block overflow-hidden rounded-3xl transition-transform duration-300 hover:-translate-y-2"
     >
       <div className="relative aspect-[16/10] w-full overflow-hidden">
         <Image

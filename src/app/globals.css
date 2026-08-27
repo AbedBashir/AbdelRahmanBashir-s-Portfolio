@@ -44,6 +44,17 @@ body {
   border-radius: 999px;
 }
 
+/* Cheaper stand-in for .glass: same look, no backdrop-filter. Use this for
+   any card that sits on the plain dark page background rather than over the
+   animated hero canvas — backdrop-filter is expensive to composite and adds
+   up fast once dozens of cards render at once (project grids, skill cards,
+   timeline, etc). Reserve .glass for elements that actually overlay moving
+   content (navbar, hero badges/frame, mobile menu). */
+.panel {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
 .glass {
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid rgba(255, 255, 255, 0.08);

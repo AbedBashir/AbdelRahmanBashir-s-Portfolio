@@ -86,7 +86,7 @@ export default function About() {
               {about.stats.map((stat) => (
                 <div
                   key={stat.label}
-                  className="glass rounded-2xl p-6 text-center transition-transform hover:-translate-y-1"
+                  className="panel rounded-2xl p-6 text-center transition-transform hover:-translate-y-1"
                 >
                   <div className="font-heading text-4xl font-bold text-gradient sm:text-5xl">
                     <Counter value={stat.value} />

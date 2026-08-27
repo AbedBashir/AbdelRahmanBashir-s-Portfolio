@@ -8,13 +8,18 @@ type Particle = {
   r: number;
   vx: number;
   vy: number;
-  hue: number;
+  color: string;
 };
 
 /**
  * Canvas-based animated background: soft glowing particles drifting and
  * connecting with faint lines, plus large slow-moving gradient blobs behind
  * them. Fully self-contained, no external assets, reduced-motion aware.
+ *
+ * Perf notes: no per-frame shadowBlur (very expensive in Canvas2D — colors
+ * are pre-baked into each particle instead), frame rate capped at ~30fps,
+ * and the render loop pauses entirely once the canvas scrolls out of view
+ * or the tab is hidden.
  */
 export default function AnimatedBackground() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -33,29 +38,43 @@ export default function AnimatedBackground() {
     let height = 0;
     let particles: Particle[] = [];
     let rafId = 0;
+    let running = false;
+    let lastFrame = 0;
+    const frameInterval = 1000 / 30; // cap at ~30fps
 
-    const hues = [190, 280, 330, 40];
+    const colors = [
+      "rgba(103, 232, 249, 0.85)", // cyan
+      "rgba(232, 121, 249, 0.85)", // fuchsia
+      "rgba(244, 114, 182, 0.85)", // pink
+      "rgba(251, 191, 36, 0.85)", // amber
+    ];
 
     const resize = () => {
       width = canvas.clientWidth;
       height = canvas.clientHeight;
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      canvas.width = width * dpr;
-      canvas.height = height * dpr;
+      const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+      canvas.width = Math.round(width * dpr);
+      canvas.height = Math.round(height * dpr);
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
-      const count = Math.min(70, Math.floor((width * height) / 18000));
+      const count = Math.min(45, Math.floor((width * height) / 26000));
       particles = Array.from({ length: count }, () => ({
         x: Math.random() * width,
         y: Math.random() * height,
-        r: Math.random() * 1.8 + 0.6,
-        vx: (Math.random() - 0.5) * 0.25,
-        vy: (Math.random() - 0.5) * 0.25,
-        hue: hues[Math.floor(Math.random() * hues.length)],
+        r: Math.random() * 1.6 + 0.6,
+        vx: (Math.random() - 0.5) * 0.22,
+        vy: (Math.random() - 0.5) * 0.22,
+        color: colors[Math.floor(Math.random() * colors.length)],
       }));
     };
 
-    const draw = () => {
+    const draw = (time: number) => {
+      if (!running) return;
+      rafId = requestAnimationFrame(draw);
+
+      if (time - lastFrame < frameInterval) return;
+      lastFrame = time;
+
       ctx.clearRect(0, 0, width, height);
 
       for (const p of particles) {
@@ -66,13 +85,11 @@ export default function AnimatedBackground() {
 
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        ctx.fillStyle = `hsla(${p.hue}, 90%, 65%, 0.8)`;
-        ctx.shadowColor = `hsla(${p.hue}, 90%, 65%, 0.9)`;
-        ctx.shadowBlur = 8;
+        ctx.fillStyle = p.color;
         ctx.fill();
       }
 
-      const maxDist = 130;
+      const maxDist = 120;
       for (let i = 0; i < particles.length; i++) {
         for (let j = i + 1; j < particles.length; j++) {
           const a = particles[i];
@@ -90,31 +107,59 @@ export default function AnimatedBackground() {
           }
         }
       }
+    };
 
+    const start = () => {
+      if (running || prefersReducedMotion) return;
+      running = true;
+      lastFrame = 0;
       rafId = requestAnimationFrame(draw);
+    };
+
+    const stop = () => {
+      running = false;
+      cancelAnimationFrame(rafId);
     };
 
     resize();
     window.addEventListener("resize", resize);
 
-    if (!prefersReducedMotion) {
-      rafId = requestAnimationFrame(draw);
-    } else {
-      draw();
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && document.visibilityState === "visible") {
+          start();
+        } else {
+          stop();
+        }
+      },
+      { threshold: 0 }
+    );
+    io.observe(canvas);
+
+    const onVisibility = () => {
+      if (document.visibilityState === "visible") start();
+      else stop();
+    };
+    document.addEventListener("visibilitychange", onVisibility);
+
+    if (prefersReducedMotion) {
+      draw(0);
     }
 
     return () => {
+      stop();
+      io.disconnect();
       window.removeEventListener("resize", resize);
-      cancelAnimationFrame(rafId);
+      document.removeEventListener("visibilitychange", onVisibility);
     };
   }, []);
 
   return (
     <div className="absolute inset-0 overflow-hidden">
       {/* Slow-moving gradient blobs */}
-      <div className="absolute -top-40 -left-40 h-[32rem] w-[32rem] animate-blob rounded-full bg-cyan-500/25 blur-[110px]" />
-      <div className="absolute top-1/3 -right-40 h-[28rem] w-[28rem] animate-blob-slow rounded-full bg-fuchsia-500/25 blur-[110px]" />
-      <div className="absolute -bottom-32 left-1/4 h-[26rem] w-[26rem] animate-blob-slower rounded-full bg-amber-400/20 blur-[110px]" />
+      <div className="absolute -top-40 -left-40 h-[32rem] w-[32rem] animate-blob rounded-full bg-cyan-500/25 blur-[90px]" />
+      <div className="absolute top-1/3 -right-40 h-[28rem] w-[28rem] animate-blob-slow rounded-full bg-fuchsia-500/25 blur-[90px]" />
+      <div className="absolute -bottom-32 left-1/4 h-[26rem] w-[26rem] animate-blob-slower rounded-full bg-amber-400/20 blur-[90px]" />
 
       <canvas ref={canvasRef} className="relative h-full w-full" />
 

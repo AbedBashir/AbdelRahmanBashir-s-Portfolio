@@ -64,7 +64,7 @@ export default function Skills() {
               direction={i % 2 === 0 ? "left" : "right"}
               delay={i * 0.05}
             >
-              <div className="glass h-full rounded-3xl p-8 transition-transform hover:-translate-y-1">
+              <div className="panel h-full rounded-3xl p-8 transition-transform hover:-translate-y-1">
                 <h3 className="font-heading text-2xl font-bold text-white">
                   {group.category}
                 </h3>

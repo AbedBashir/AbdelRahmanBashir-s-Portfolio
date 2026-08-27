@@ -29,7 +29,7 @@ export default function WorkGrid({
         <div className="mt-12 flex justify-center">
           <button
             onClick={() => setExpanded((e) => !e)}
-            className="glass rounded-full px-7 py-3 text-sm font-semibold text-white transition-colors hover:bg-white/10"
+            className="panel rounded-full px-7 py-3 text-sm font-semibold text-white transition-colors hover:bg-white/10"
           >
             {expanded ? "Show Less" : `Show All ${items.length}`}
           </button>
