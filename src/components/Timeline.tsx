@@ -75,7 +75,7 @@ export default function Timeline() {
               const fromLeft = i % 2 === 0;
               return (
                 <div
-                  key={item.title}
+                  key={`${item.year}-${item.title}`}
                   className={`timeline-item relative flex flex-col gap-4 pl-12 md:w-1/2 md:pl-0 md:pr-0 ${
                     fromLeft
                       ? "md:mr-auto md:pr-14 md:text-right"
